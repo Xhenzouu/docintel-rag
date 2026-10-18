@@ -1,26 +1,45 @@
-# Pagewise Answer Trail
+# DocIntel — AI Document Intelligence (RAG)
 
-Implement exactly the screenshot and nothing else
+A full-stack, AI-powered document chat application that allows users to upload PDFs and ask questions based on the document's content.
 
-This project was built with [Lovable](https://lovable.dev).
+**Live Demo:** [docintel-rag.lovable.app](https://docintel-rag.lovable.app)
 
-**Live app**: https://pagewise-answer-trail.lovable.app
+## 🚀 Features
 
-## Build with Lovable
+- **PDF Parsing:** Extracts text client-side using `pdfjs-dist`.
+- **Real RAG Pipeline:** Chunks text, generates vector embeddings, and stores them in Supabase using the `pgvector` extension.
+- **AI-Powered Answers:** Uses Lovable's built-in AI Gateway (Gemini models) to generate context-aware answers.
+- **Source Citations:** Every answer includes page-number pills linking back to the exact page in the uploaded document.
+- **No Login Required:** Designed as a frictionless, public demo tool.
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/07eebebd-b48f-4473-bf8b-2029ba6f2ad2).
+## 🛠️ Tech Stack
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+- **Frontend:** React, TypeScript, Tailwind CSS
+- **Database:** Supabase (PostgreSQL + pgvector)
+- **AI/LLM:** Lovable AI Gateway (Gemini 3.8 Flash)
+- **PDF Extraction:** pdfjs-dist
 
-## Development
+## 📦 Run Locally
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+If you want to run this project locally:
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+1. Clone the repo:
+
+   ```bash
+   git clone https://github.com/Xhenzouu/docintel-rag.git
+   cd docintel-rag
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Set up your `.env` file with your Supabase credentials.
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
