@@ -71,7 +71,7 @@
   --bubble: oklch(0.13 0.002 60);
   --pill: oklch(0.31 0.004 60);
   --pill-foreground: oklch(0.78 0.008 70);
-  --brand: oklch(0.68 0.13 45);             /* Claude clay */
+  --brand: oklch(0.68 0.13 45);             /* clay accent */
 }
 
 @layer base {
