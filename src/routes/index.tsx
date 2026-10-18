@@ -271,7 +271,6 @@ function App() {
           </>
         )}
 
-        {processing && empty === false && null}
         {dragging && (
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center border-2 border-dashed border-ring bg-background/90">
             <p className="font-serif text-2xl">Drop your PDF here</p>
