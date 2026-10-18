@@ -14,13 +14,134 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      chat_messages: {
+        Row: {
+          chat_id: string
+          content: string
+          created_at: string
+          id: string
+          pages: number[]
+          role: string
+        }
+        Insert: {
+          chat_id: string
+          content: string
+          created_at?: string
+          id?: string
+          pages?: number[]
+          role: string
+        }
+        Update: {
+          chat_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          pages?: number[]
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_chat_id_fkey"
+            columns: ["chat_id"]
+            isOneToOne: false
+            referencedRelation: "chats"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chats: {
+        Row: {
+          created_at: string
+          document_id: string | null
+          id: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          document_id?: string | null
+          id?: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          document_id?: string | null
+          id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chats_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      document_chunks: {
+        Row: {
+          content: string
+          document_id: string
+          embedding: string
+          id: string
+          page_number: number
+        }
+        Insert: {
+          content: string
+          document_id: string
+          embedding: string
+          id?: string
+          page_number: number
+        }
+        Update: {
+          content?: string
+          document_id?: string
+          embedding?: string
+          id?: string
+          page_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "document_chunks_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      documents: {
+        Row: {
+          created_at: string
+          file_name: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      match_chunks: {
+        Args: { doc_id: string; match_count?: number; query_embedding: string }
+        Returns: {
+          content: string
+          id: string
+          page_number: number
+          similarity: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
