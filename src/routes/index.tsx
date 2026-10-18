@@ -142,7 +142,7 @@ function App() {
           )}
         </div>
       )}
-      <div className="rounded-2xl border border-input bg-composer px-3 pb-3 pt-3">
+      <div className="gradient-border rounded-2xl px-3 pb-3 pt-3">
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -163,7 +163,7 @@ function App() {
           <button
             onClick={send}
             disabled={!input.trim() || streaming || !!processing}
-            className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-primary transition-opacity disabled:opacity-30"
+            className="gradient-fill flex h-8 w-8 items-center justify-center rounded-lg text-primary transition-opacity disabled:opacity-30"
             aria-label="Send"
           >
             {streaming ? <Loader2 className="h-4 w-4 animate-spin" /> : <ArrowUp className="h-4 w-4" strokeWidth={2} />}
@@ -187,10 +187,16 @@ function App() {
           <div className="flex items-center justify-between px-4 py-4">
             <span className="flex items-center gap-2.5">
               <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" aria-hidden="true">
-                <rect x="3" y="3" width="12" height="12" rx="3" fill="currentColor" className="text-brand" />
-                <rect x="10.5" y="10.5" width="10.5" height="10.5" rx="3" fill="none" stroke="currentColor" className="text-brand" strokeWidth="2" />
+                <defs>
+                  <linearGradient id="docintel-mark" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stopColor="#22D3EE" />
+                    <stop offset="1" stopColor="#A855F7" />
+                  </linearGradient>
+                </defs>
+                <rect x="3" y="3" width="12" height="12" rx="3" fill="url(#docintel-mark)" />
+                <rect x="10.5" y="10.5" width="10.5" height="10.5" rx="3" fill="none" stroke="url(#docintel-mark)" strokeWidth="2" />
               </svg>
-              <span className="font-serif text-lg">DocIntel</span>
+              <span className="gradient-text font-serif text-lg">DocIntel</span>
             </span>
             <button onClick={() => setSidebar(false)} className="text-muted-foreground hover:text-foreground" aria-label="Close sidebar">
               <PanelLeft className="h-4 w-4" strokeWidth={1.5} />
@@ -228,10 +234,10 @@ function App() {
 
         {empty ? (
           <div className="flex flex-1 flex-col items-center justify-center px-4">
+            <h1 className="gradient-text mb-8 w-full text-center font-serif text-display font-normal md:whitespace-nowrap">
+              What are we researching today?
+            </h1>
             <div className="w-full max-w-2xl">
-              <h1 className="mb-8 text-center font-serif text-4xl font-normal text-foreground md:text-5xl">
-                <span className="mr-3 text-brand">✻</span>What are we researching today?
-              </h1>
               {composer}
               {error && <p className="mt-3 text-center text-sm text-destructive">{error}</p>}
               <p className="mt-4 text-center text-xs text-muted-foreground">Drop a PDF anywhere, or use + to upload one.</p>
