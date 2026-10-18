@@ -1,6 +1,6 @@
 const GATEWAY = "https://ai.gateway.lovable.dev/v1";
 export const EMBED_MODEL = "google/gemini-embedding-2";
-export const CHAT_MODEL = "google/gemini-3.7-flash";
+export const CHAT_MODEL = "google/gemini-3.8-flash";
 
 export class GatewayError extends Error {
   constructor(public status: number, message: string) {
