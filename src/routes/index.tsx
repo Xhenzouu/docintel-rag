@@ -185,7 +185,13 @@ function App() {
       {sidebar && (
         <aside className="flex w-[260px] shrink-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
           <div className="flex items-center justify-between px-4 py-4">
-            <span className="font-serif text-lg">DocIntel</span>
+            <span className="flex items-center gap-2.5">
+              <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" aria-hidden="true">
+                <rect x="3" y="3" width="12" height="12" rx="3" fill="currentColor" className="text-brand" />
+                <rect x="10.5" y="10.5" width="10.5" height="10.5" rx="3" fill="none" stroke="currentColor" className="text-brand" strokeWidth="2" />
+              </svg>
+              <span className="font-serif text-lg">DocIntel</span>
+            </span>
             <button onClick={() => setSidebar(false)} className="text-muted-foreground hover:text-foreground" aria-label="Close sidebar">
               <PanelLeft className="h-4 w-4" strokeWidth={1.5} />
             </button>
