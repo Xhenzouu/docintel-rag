@@ -9,7 +9,7 @@ export class GatewayError extends Error {
 }
 
 export function getApiKey() {
-  const key = process.env.LOVABLE_API_KEY;
+  const key = process.env["LOVABLE_API_KEY"];
   if (!key) throw new GatewayError(401, "AI is not configured.");
   return key;
 }

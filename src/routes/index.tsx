@@ -304,7 +304,7 @@ function inline(s: string): ReactNode[] {
   const parts = s.split(/(\[Pages? [\d,\s\-–]+\]|\*\*[^*]+\*\*)/g);
   return parts.map((p, i) => {
     const cite = p.match(/^\[Pages? ([\d,\s\-–]+)\]$/);
-    if (cite) return cite[1].split(/[,\s]+/).filter(Boolean).map((n, j) => <Pill key={`${i}-${j}`} page={n as unknown as number} />);
+    if (cite) return (cite[1] ?? "").split(/[,\s]+/).filter(Boolean).map((n, j) => <Pill key={`${i}-${j}`} page={n as unknown as number} />);
     if (p.startsWith("**") && p.endsWith("**")) return <strong key={i} className="font-semibold">{p.slice(2, -2)}</strong>;
     return p;
   });
