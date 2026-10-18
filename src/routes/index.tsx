@@ -7,9 +7,9 @@ import { chunkPages, extractPdfPages } from "@/lib/pdf";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Document Chat — Ask your PDFs" },
+      { title: "DocIntel — Ask your PDFs" },
       { name: "description", content: "Upload a PDF and ask questions. Answers cite the exact pages they come from." },
-      { property: "og:title", content: "Document Chat — Ask your PDFs" },
+      { property: "og:title", content: "DocIntel — Ask your PDFs" },
       { property: "og:description", content: "Upload a PDF and ask questions with page-level citations." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -22,10 +22,6 @@ type Msg = { role: "user" | "assistant"; content: string; pages?: number[] };
 type Chat = { id: string; title: string; document_id: string | null };
 type Doc = { id: string; name: string };
 
-function greeting() {
-  const h = new Date().getHours();
-  return h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
-}
 
 function App() {
   const [chats, setChats] = useState<Chat[]>([]);
@@ -38,11 +34,9 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
   const [sidebar, setSidebar] = useState(true);
-  const [hello, setHello] = useState("Hello");
   const fileRef = useRef<HTMLInputElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => setHello(greeting()), []);
   const loadChats = useCallback(async () => {
     const { data } = await supabase.from("chats").select("id,title,document_id").order("created_at", { ascending: false }).limit(30);
     setChats(data ?? []);
@@ -191,7 +185,7 @@ function App() {
       {sidebar && (
         <aside className="flex w-[260px] shrink-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
           <div className="flex items-center justify-between px-4 py-4">
-            <span className="font-serif text-lg">Claude</span>
+            <span className="font-serif text-lg">DocIntel</span>
             <button onClick={() => setSidebar(false)} className="text-muted-foreground hover:text-foreground" aria-label="Close sidebar">
               <PanelLeft className="h-4 w-4" strokeWidth={1.5} />
             </button>
@@ -230,7 +224,7 @@ function App() {
           <div className="flex flex-1 flex-col items-center justify-center px-4">
             <div className="w-full max-w-2xl">
               <h1 className="mb-8 text-center font-serif text-4xl font-normal text-foreground md:text-5xl">
-                <span className="mr-3 text-brand">✻</span>{hello}, Brix.
+                <span className="mr-3 text-brand">✻</span>What are we researching today?
               </h1>
               {composer}
               {error && <p className="mt-3 text-center text-sm text-destructive">{error}</p>}
