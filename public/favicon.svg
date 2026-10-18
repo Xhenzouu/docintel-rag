@@ -1,5 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#201D1B"/>
-  <rect x="13" y="13" width="27" height="27" rx="7" fill="#D97757"/>
-  <rect x="27" y="27" width="24" height="24" rx="7" fill="none" stroke="#D97757" stroke-width="4"/>
+  <defs>
+    <linearGradient id="g" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#A855F7"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#17161A"/>
+  <rect x="13" y="13" width="27" height="27" rx="7" fill="url(#g)"/>
+  <rect x="27" y="27" width="24" height="24" rx="7" fill="none" stroke="url(#g)" stroke-width="4"/>
 </svg>
