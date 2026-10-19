@@ -133,6 +133,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      chat_exists: { Args: { _id: string }; Returns: boolean }
+      document_exists: { Args: { _id: string }; Returns: boolean }
       match_chunks: {
         Args: { doc_id: string; match_count?: number; query_embedding: string }
         Returns: {
