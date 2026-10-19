@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 import { ArrowUp, FileText, Loader2, MessageSquare, PanelLeft, Plus, SquarePen, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { chunkPages, extractPdfPages } from "@/lib/pdf";
+import { getChat, listChats } from "@/lib/chats.functions";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -38,8 +39,7 @@ function App() {
   const endRef = useRef<HTMLDivElement>(null);
 
   const loadChats = useCallback(async () => {
-    const { data } = await supabase.from("chats").select("id,title,document_id").order("created_at", { ascending: false }).limit(30);
-    setChats(data ?? []);
+    try { setChats(await listChats()); } catch { setChats([]); }
   }, []);
   useEffect(() => { loadChats(); }, [loadChats]);
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, processing]);
@@ -51,11 +51,8 @@ function App() {
   const openChat = async (c: Chat) => {
     setError(null);
     setChatId(c.id);
-    const [{ data: msgs }, { data: d }] = await Promise.all([
-      supabase.from("chat_messages").select("role,content,pages").eq("chat_id", c.id).order("created_at"),
-      c.document_id ? supabase.from("documents").select("id,file_name").eq("id", c.document_id).maybeSingle() : Promise.resolve({ data: null }),
-    ]);
-    setMessages((msgs ?? []).map((m) => ({ role: m.role as Msg["role"], content: m.content, pages: m.pages })));
+    const { messages: msgs, document: d } = await getChat({ data: { chatId: c.id } });
+    setMessages(msgs.map((m) => ({ role: m.role as Msg["role"], content: m.content, pages: m.pages })));
     setDoc(d ? { id: d.id, name: d.file_name } : null);
   };
 
@@ -94,8 +91,9 @@ function App() {
 
     let id = chatId;
     if (!id) {
-      const { data } = await supabase.from("chats").insert({ title: q.slice(0, 60), document_id: doc?.id ?? null }).select("id").single();
-      id = data?.id ?? null; setChatId(id); loadChats();
+      const newId = crypto.randomUUID();
+      const { error: insErr } = await supabase.from("chats").insert({ id: newId, title: q.slice(0, 60), document_id: doc?.id ?? null });
+      id = insErr ? null : newId; setChatId(id); loadChats();
     }
     if (id) supabase.from("chat_messages").insert({ chat_id: id, role: "user", content: q }).then();
 
