@@ -142,7 +142,7 @@ function App() {
           )}
         </div>
       )}
-      <div className="gradient-border rounded-2xl px-3 pb-3 pt-3">
+      <div className="rounded-2xl border border-border bg-composer px-3 pb-3 pt-3">
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -163,7 +163,7 @@ function App() {
           <button
             onClick={send}
             disabled={!input.trim() || streaming || !!processing}
-            className="gradient-fill flex h-8 w-8 items-center justify-center rounded-lg text-primary transition-opacity disabled:opacity-30"
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-background transition-opacity disabled:opacity-30"
             aria-label="Send"
           >
             {streaming ? <Loader2 className="h-4 w-4 animate-spin" /> : <ArrowUp className="h-4 w-4" strokeWidth={2} />}
@@ -186,17 +186,12 @@ function App() {
         <aside className="flex w-[260px] shrink-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
           <div className="flex items-center justify-between px-4 py-4">
             <span className="flex items-center gap-2.5">
-              <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" aria-hidden="true">
-                <defs>
-                  <linearGradient id="docintel-mark" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
-                    <stop offset="0" stopColor="#22D3EE" />
-                    <stop offset="1" stopColor="#A855F7" />
-                  </linearGradient>
-                </defs>
-                <rect x="3" y="3" width="12" height="12" rx="3" fill="url(#docintel-mark)" />
-                <rect x="10.5" y="10.5" width="10.5" height="10.5" rx="3" fill="none" stroke="url(#docintel-mark)" strokeWidth="2" />
+              <svg viewBox="0 0 24 24" className="h-[18px] w-[18px] text-brand" aria-hidden="true">
+                <rect x="3" y="3" width="12" height="12" rx="3" fill="currentColor" />
+                <rect x="10.5" y="10.5" width="10.5" height="10.5" rx="3" fill="none" stroke="currentColor" strokeWidth="2" />
               </svg>
-              <span className="gradient-text font-serif text-lg">DocIntel</span>
+              <span className="font-serif text-lg text-brand">DocIntel</span>
+
             </span>
             <button onClick={() => setSidebar(false)} className="text-muted-foreground hover:text-foreground" aria-label="Close sidebar">
               <PanelLeft className="h-4 w-4" strokeWidth={1.5} />
@@ -234,9 +229,10 @@ function App() {
 
         {empty ? (
           <div className="flex flex-1 flex-col items-center justify-center px-4">
-            <h1 className="gradient-text mb-8 w-full text-center font-serif text-display font-normal md:whitespace-nowrap">
-              What are we researching today?
+            <h1 className="mb-8 w-full text-center font-serif text-display font-normal text-foreground md:whitespace-nowrap">
+              What are we researching <span className="text-brand">today?</span>
             </h1>
+
             <div className="w-full max-w-2xl">
               {composer}
               {error && <p className="mt-3 text-center text-sm text-destructive">{error}</p>}
@@ -250,7 +246,7 @@ function App() {
                 {messages.map((m, i) =>
                   m.role === "user" ? (
                     <div key={i} className="flex justify-end">
-                      <div className="max-w-[85%] whitespace-pre-wrap rounded-2xl bg-bubble px-4 py-2.5 text-[15px] leading-7">{m.content}</div>
+                      <div className="max-w-[85%] whitespace-pre-wrap rounded-2xl border border-border bg-bubble px-4 py-2.5 text-[15px] leading-7">{m.content}</div>
                     </div>
                   ) : (
                     <div key={i} className="text-[15px] leading-7 text-foreground">
